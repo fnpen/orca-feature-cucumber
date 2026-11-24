@@ -1,0 +1,79 @@
+{
+  "$schema": "https://raw.githubusercontent.com/stablyai/orca/main/docs/schemas/plugins/orca-plugin.v2.schema.json",
+  "manifestVersion": 2,
+  "execution": "trusted-worker",
+  "id": "cucumber",
+  "name": "Cucumber (Gherkin)",
+  "version": "0.1.0",
+  "description": "Gherkin syntax highlighting, a new feature file template and format on save for Cucumber .feature files.",
+  "license": "MIT",
+  "engines": {
+    "orca": ">=1.4.248"
+  },
+  "pluginApi": 1,
+  "main": "src/worker.ts",
+  "contributes": {
+    "syntaxes": [
+      {
+        "id": "feature",
+        "title": "Gherkin",
+        "scopeName": "text.gherkin.feature",
+        "path": "syntaxes/feature.tmLanguage.json",
+        "configuration": "syntaxes/language-configuration.json",
+        "extensions": [".feature", ".testcase"]
+      }
+    ],
+    "newFiles": [
+      {
+        "id": "feature",
+        "title": "New feature file",
+        "extension": ".feature",
+        "template": "templates/new.feature"
+      }
+    ],
+    "hooks": [
+      {
+        "event": "editor.save.before"
+      }
+    ],
+    "settings": [
+      {
+        "key": "formatOnSave",
+        "title": "Format on save",
+        "description": "Format .feature and .testcase files when you save them: indents, tables and JSON doc strings.",
+        "type": "boolean",
+        "default": true
+      },
+      {
+        "key": "indentSize",
+        "title": "Indent size",
+        "description": "Spaces per indent level; 0 indents with a tab.",
+        "type": "integer",
+        "default": 2,
+        "minimum": 0,
+        "maximum": 8
+      },
+      {
+        "key": "skipDocStringsFormat",
+        "title": "Keep doc strings as written",
+        "description": "Leave the lines between \"\"\" or ''' untouched. Turn off to re-indent them with the rest of the file.",
+        "type": "boolean",
+        "default": true
+      },
+      {
+        "key": "formatConfOverride",
+        "title": "Indent overrides",
+        "description": "JSON object mapping a line prefix to an indent level, \"relative\" (same as the next line) or \"relativeUp\" (same as the previous line). Use it for non-English keywords.",
+        "type": "string",
+        "multiline": true,
+        "default": "",
+        "placeholder": "{ \"Cuando\": 2, \"But\": \"relative\" }"
+      }
+    ]
+  },
+  "capabilities": [
+    {
+      "kind": "settings:own"
+    }
+  ]
+}
